@@ -56,6 +56,10 @@ class Voting3 extends BaseController
             $this->session->setFlashdata('sweetalertfail', 'No finished and active election.');
             return redirect()->to(base_url());
         }
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['elections'] = $this->electionModel->findAll();
         // $data['elections'] = $this->electionModel->where('status !=', 'Application')->findAll();

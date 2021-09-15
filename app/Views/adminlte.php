@@ -69,7 +69,11 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="<?= base_url()?>/public/uploads/profile_pic/<?= esc($user_details['profile_pic'])?>" class="img-circle elevation-2" alt="User Image">
+          <?php if(!empty($user_details['profile_pic'])):?>
+            <img src="<?= base_url()?>/public/uploads/profile_pic/<?= esc($user_details['profile_pic'])?>" class="img-circle elevation-2" alt="User Image">
+          <?php else:?>
+            <img src="<?= base_url()?>/public/img/blank.jpg" class="img-circle elevation-2" alt="User Image">
+          <?php endif?>
         </div>
         <div class="info">
           <a href="<?= base_url()?>/user/<?= esc($user_details['username'])?>" class="d-block"><?= esc($user_details['first_name'])?> <?= esc($user_details['last_name'])?></a>
@@ -81,7 +85,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <?= view('sidebar2');?>
+          <?= view('sidebar3');?>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

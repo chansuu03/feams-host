@@ -20,6 +20,10 @@ class PaymentMethods extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['payMeths'] = $this->paymentMethModel->findAll();
         // echo '<pre>';
@@ -39,6 +43,10 @@ class PaymentMethods extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         helper('text');
         $data['edit'] = false;
@@ -74,6 +82,10 @@ class PaymentMethods extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         helper('text');
         $data['edit'] = true;
@@ -110,6 +122,10 @@ class PaymentMethods extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         if($this->paymentMethModel->where('id', $id)->delete()) {
           $activityLog['user'] = $this->session->get('user_id');

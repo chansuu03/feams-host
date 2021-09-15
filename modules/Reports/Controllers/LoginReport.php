@@ -20,6 +20,10 @@ class LoginReport extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         if($this->request->getMethod() == 'post') {
             $this->generatePDF();
@@ -27,7 +31,7 @@ class LoginReport extends BaseController
         $data['logins'] = $this->loginModel->withRole();
 
         $data['user_details'] = user_details($this->session->get('user_id'));
-        $data['active'] = 'reports';
+        $data['active'] = 'login_repo';
         $data['title'] = 'Login Reports';
         return view('Modules\Reports\Views\login\index', $data);
     }

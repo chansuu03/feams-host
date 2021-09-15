@@ -43,6 +43,7 @@ class UserModel extends Model {
     $this->select('users.id,username, profile_pic, last_name, first_name, middle_name, gender, birthdate, contact_number, email, proof, roles.role_name, status');
     $this->where('users.deleted_at', NULL);
     $this->join('roles', 'roles.id = users.role', 'left');
+    $this->orderBy('id', 'DESC');
     return $this->get()->getResultArray();
   }
 

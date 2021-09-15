@@ -58,6 +58,10 @@ class Elections2 extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
         
         $data['elections'] = $this->electionModel->findAll();
 
@@ -75,6 +79,10 @@ class Elections2 extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['edit'] = false;
         if($this->request->getMethod() == 'post') {
@@ -112,6 +120,10 @@ class Elections2 extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['elecPositions'] = $this->electoralPositionModel->findAll();
         $data['positions'] = $this->positionModel->findAll();
@@ -165,6 +177,10 @@ class Elections2 extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['election'] = $this->electionModel->where(['id' => $id])->first();
         if(empty($data['election'])) {
@@ -282,6 +298,10 @@ class Elections2 extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['id'] = $id;
         $data['value'] = $this->electionModel->where('id', $id)->first();

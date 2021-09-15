@@ -39,6 +39,10 @@ class Roles extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
         
         $data['user_details'] = user_details($this->session->get('user_id'));
         $data['roles'] = $this->roleModel->findAll();
@@ -56,6 +60,11 @@ class Roles extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
+
         if($this->request->getMethod() == 'post') {
             if($this->validate('roles')){
                 if($this->roleModel->insert($_POST)) {

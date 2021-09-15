@@ -25,6 +25,10 @@ class Permissions extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['roles'] = $this->roleModel->findAll();
         $data['role_permissions'] = $this->rolePermissionModel->checkRole();
@@ -49,25 +53,36 @@ class Permissions extends BaseController
         $data['role_perms'] = $this->rolePermissionModel->where('role_id', $role_id)->get()->getResultArray();
         $data['selectedRole'] = $this->roleModel->where('id', $role_id)->first();
         $data['role_id'] = $role_id;
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
+
         
         if($this->request->getMethod() == 'post') {
             if($this->validate('role_perm')) {
                 $this->rolePermissionModel->deleteAll($role_id);
-                foreach($_POST['perm_id'] as $perms) {
-                    $permissions = $this->permissionModel->where('id', $perms)->first();
-                    $value = [
-                        'role_id' => $this->request->getVar('role_id'),
-                        'perm_id' => $perms,
-                        'perm_mod' => $permissions['perm_mod'],
-                    ];
-                    if($this->rolePermissionModel->insert($value)) {
-                        $activityLog['user'] = $this->session->get('user_id');
-                        $activityLog['description'] = 'Edited permissions for role '.$data['selectedRole']['role_name'];
-                        $this->activityLogModel->save($activityLog);
-                    } else {
-                        $this->session->setFlashData('failMsg', 'There is an error on adding role. Please try again.');
-                        return redirect()->back()->withInput();
+                if(!empty($_POST['perm_id'])) {
+                    foreach($_POST['perm_id'] as $perms) {
+                        $permissions = $this->permissionModel->where('id', $perms)->first();
+                        $value = [
+                            'role_id' => $this->request->getVar('role_id'),
+                            'perm_id' => $perms,
+                            'perm_mod' => $permissions['perm_mod'],
+                        ];
+                        if($this->rolePermissionModel->insert($value)) {
+                            $activityLog['user'] = $this->session->get('user_id');
+                            $activityLog['description'] = 'Edited permissions for role '.$data['selectedRole']['role_name'];
+                            $this->activityLogModel->save($activityLog);
+                        } else {
+                            $this->session->setFlashData('failMsg', 'There is an error on adding role. Please try again.');
+                            return redirect()->back()->withInput();
+                        }
                     }
+                } else {
+                    $activityLog['user'] = $this->session->get('user_id');
+                    $activityLog['description'] = 'Edited permissions for role '.$data['selectedRole']['role_name'];
+                    $this->activityLogModel->save($activityLog);
                 }
                 $this->session->setFlashData('successMsg', 'Edit permission successful');
                 return redirect()->to(base_url('admin/permissions'));

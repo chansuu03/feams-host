@@ -31,6 +31,10 @@ class Payments extends BaseController
             // die();
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['user_details'] = user_details($this->session->get('user_id'));
         $data['active'] = 'payments';
@@ -50,6 +54,10 @@ class Payments extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         helper('text');
         $data['edit'] = false;
@@ -101,6 +109,10 @@ class Payments extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         helper('text');
         $data['edit'] = false;
@@ -156,6 +168,10 @@ class Payments extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         helper('text');
         $data['edit'] = true;
@@ -201,6 +217,11 @@ class Payments extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
+
         $payment = $this->paymentModel->where('id', $id)->first();
         if($this->paymentModel->where('id', $id)->delete()) {
           $contri = $this->contriModel->where('id', $payment['contri_id'])->first();

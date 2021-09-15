@@ -210,7 +210,7 @@
 			Swal.fire({
 				icon: 'error',
 				title: 'Error',
-				text: 'There\'s an error accessing the page, please try again',
+				text: '<?= session()->getFlashdata('sweetalertfail')?> There\'s an error accessing the page, please try again',
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: 'Okay'
 			})/*swal2*/.then((result) =>

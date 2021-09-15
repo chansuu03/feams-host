@@ -22,6 +22,10 @@ class Announcements extends BaseController
         //     return redirect()->to(base_url());
         // }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['announcements'] = $this->announceModel->viewUploader();
         // echo '<pre>';
@@ -53,6 +57,10 @@ class Announcements extends BaseController
         //     return redirect()->to(base_url());
         // }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['announcements'] = $this->announceModel->viewUploader();
 
@@ -70,6 +78,10 @@ class Announcements extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         helper('text');
         $data['edit'] = false;
@@ -122,6 +134,10 @@ class Announcements extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         helper('text');
         $data['edit'] = true;
@@ -185,6 +201,10 @@ class Announcements extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('', '', $this->session->get('role'));
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['announce'] = $this->announceModel->where('link', $link)->first();
 

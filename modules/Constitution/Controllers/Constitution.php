@@ -17,6 +17,11 @@ class Constitution extends BaseController
 	public function index() {
         $data['perm_id'] = check_role('', '', $this->session->get('role'));
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
+
         // if($this->session->get('role') != '1') {
         //     $this->session->setFlashdata('sweetalertfail', true);
         //     return redirect()->to(base_url());
@@ -39,6 +44,10 @@ class Constitution extends BaseController
         if($this->session->get('role') != '1') {
             $this->session->setFlashdata('sweetalertfail', true);
             return redirect()->to(base_url());
+        }
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
         }
 
         $data['edit'] = false;
@@ -71,6 +80,10 @@ class Constitution extends BaseController
         if($this->session->get('role') != '1') {
             $this->session->setFlashdata('sweetalertfail', true);
             return redirect()->to(base_url());
+        }
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
         }
 
         $data['edit'] = true;

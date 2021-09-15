@@ -27,6 +27,10 @@ class Manage extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['roles'] = $this->roleModel->findAll();
         $data['threads'] = $this->threadModel->manage('0');
@@ -50,6 +54,10 @@ class Manage extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['threadData'] = $this->threadModel->where('link', $link)->first();
         $data['comments'] = $this->commentModel->viewComment($data['threadData']['id']);
@@ -68,6 +76,10 @@ class Manage extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $comment = [
             'id' => $id,

@@ -18,6 +18,10 @@ class Dashboard extends BaseController
             $this->session->setFlashdata('sweetalertfail', true);
             return redirect()->to(base_url());
         }
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 		$data['userCount'] = $this->dashboardModel->allUsers();
         // echo '<pre>';
         // print_r($data['userCount']);

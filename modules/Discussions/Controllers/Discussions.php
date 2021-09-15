@@ -23,13 +23,20 @@ class Discussions extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('', '', $this->session->get('role'));
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $data['threads'] = $this->threadModel->viewPerRole(5, $this->session->get('role'));
         $data['allThreads'] = $this->threadModel->viewAll(5);
         $data['roles'] = $this->roleModel->where('id', $this->session->get('role'))->first();
         $data['thread_pager'] = $this->threadModel->pager;
         // echo '<pre>';
-        // print_r($data['threads']);
+        // print_r($data['perms']);
+        // if(in_array('USR', $data['perms'])) {
+        //     echo 'true';
+        // }
         // die();
         
         $data['user_details'] = user_details($this->session->get('user_id'));

@@ -27,6 +27,10 @@ class Users extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
         
         $data['user_details'] = user_details($this->session->get('user_id'));
         $data['users'] = $this->userModel->viewing();
@@ -74,6 +78,10 @@ class Users extends BaseController
         if(!empty($data['perm_id']['perm_id']['36'])) {
           $data['edit'] = true;
         }
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         if($this->request->getMethod() == 'post') {
           if($this->validate('editUser')) {
@@ -114,7 +122,7 @@ class Users extends BaseController
           }
         }
 
-        $data['active'] = 'users';
+        $data['active'] = '';
         $data['title'] = $data['user']['first_name'].' '. $data['user']['last_name'];
         // echo $data['user']['status'];
         // die();

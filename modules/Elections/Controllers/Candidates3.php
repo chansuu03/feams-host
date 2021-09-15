@@ -24,6 +24,10 @@ class Candidates3 extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $activeElec = intval($this->electionModel->where('status', 'Application')->countAllResults(false));
         if($activeElec <= 0) {
@@ -51,6 +55,10 @@ class Candidates3 extends BaseController
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
 
         $activeElec = intval($this->electionModel->where('status', 'Application')->countAllResults(false));
         if($activeElec <= 0) {
