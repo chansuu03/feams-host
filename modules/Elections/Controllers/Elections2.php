@@ -4,6 +4,7 @@ namespace Modules\Elections\Controllers;
 use App\Controllers\BaseController;
 use Modules\Elections\Models as Models;
 use Modules\Voting\Models as VotingModels;
+use Modules\Voting2\Models as Voting2Models;
 use App\Libraries as Libraries;
 use App\Models as AppModels;
 
@@ -19,6 +20,8 @@ class Elections2 extends BaseController
         $this->mpdf = new \Mpdf\Mpdf();
         $this->electoralPositionModel = new Models\ElectoralPositionModel();
         $this->activityLogModel = new AppModels\ActivityLogModel();
+        $this->vote2Model = new Voting2Models\VoteModel();
+        $this->voteDetail2Model = new Voting2Models\VoteDetailModel();
 
         $elections = $this->electionModel->findAll();
         foreach($this->electionModel->findAll() as $election) {
@@ -54,7 +57,7 @@ class Elections2 extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('19', 'ELEC', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
@@ -75,7 +78,7 @@ class Elections2 extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('20', 'ELEC', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
@@ -116,7 +119,7 @@ class Elections2 extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('20', 'ELEC', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
@@ -173,7 +176,7 @@ class Elections2 extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('19', 'ELEC', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
@@ -184,7 +187,7 @@ class Elections2 extends BaseController
 
         $data['election'] = $this->electionModel->where(['id' => $id])->first();
         if(empty($data['election'])) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['positions'] =  $this->electionModel->electionPositions($id);
@@ -203,18 +206,46 @@ class Elections2 extends BaseController
         $data['title'] = 'Election Details';
         return view('Modules\Elections\Views\details', $data);
     }
+    
+    public function info2($id) {
+        // checking roles and permissions
+        $data['perm_id'] = check_role('19', 'ELEC', $this->session->get('role'));
+        if(!$data['perm_id']['perm_access']) {
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
+            return redirect()->to(base_url());
+        }
+        $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
+
+        $data['election'] = $this->electionModel->where(['id' => $id])->first();
+        if(empty($data['election'])) {
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
+            return redirect()->to(base_url());
+        }
+        $data['votes'] = $this->voteDetail2Model->voteCounts($id);
+        $data['voteCount'] = $this->vote2Model->perUserVote($id);
+        $data['voters'] = $this->vote2Model->elecVoter($id);
+        
+        $data['user_details'] = user_details($this->session->get('user_id'));
+        $data['active'] = 'elections';
+        $data['title'] = 'Election Details';
+        return view('Modules\Elections\Views\info', $data);
+    }
 
     public function generatePDF($id) {
         // checking roles and permissions
         $data['perm_id'] = check_role('19', 'ELEC', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
 
         $elecDetails = $this->electionModel->where(['id' => $id, 'status' => 'a'])->first();
         if(empty($elecDetails)) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $positions = $this->positionModel->where(['election_id' => $id])->findAll();
@@ -258,13 +289,13 @@ class Elections2 extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('19', 'ELEC', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
 
         $data['elecDetails'] = $this->electionModel->where(['id' => $id, 'status !=' => 'Application'])->first();
         if(empty($data['elecDetails'])) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         // $data['positions'] = $this->positionModel->where(['election_id' => $id])->findAll();
@@ -294,7 +325,7 @@ class Elections2 extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('20', 'ELEC', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];

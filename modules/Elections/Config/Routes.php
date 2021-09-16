@@ -5,7 +5,7 @@ $routes->group('admin/elections', ['namespace' => 'Modules\Elections\Controllers
   $routes->match(['get', 'post'], 'add', 'Elections2::add2', ["filter" => "auth"]);
   $routes->match(['get', 'post'], 'edit/(:num)', 'Elections2::edit/$1', ["filter" => "auth"]);
   $routes->get('delete/(:num)', 'Elections2::deactivate/$1', ["filter" => "auth"]);
-  $routes->get('(:num)', 'Elections2::info/$1', ["filter" => "auth"]);
+  $routes->get('(:num)', 'Elections2::info2/$1', ["filter" => "auth"]);
 //   $routes->get('(:num)/pdf', 'Elections2::generatePDF/$1', ["filter" => "auth"]);
   $routes->get('(:num)/pdf', 'Elections2::pdf/$1', ["filter" => "auth"]);
 });
