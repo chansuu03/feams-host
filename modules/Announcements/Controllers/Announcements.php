@@ -74,7 +74,7 @@ class Announcements extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('12', 'ANN', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
@@ -130,7 +130,7 @@ class Announcements extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('13', 'ANN', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
@@ -181,7 +181,7 @@ class Announcements extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('13', 'ANN', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
@@ -207,6 +207,10 @@ class Announcements extends BaseController
         }
 
         $data['announce'] = $this->announceModel->where('link', $link)->first();
+        if(empty($data['announce'])) {
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
+            return redirect()->to(base_url());
+        }
 
         $data['user_details'] = user_details($this->session->get('user_id'));
         $data['active'] = 'announcements';
@@ -240,7 +244,7 @@ class Announcements extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('37', 'REPO', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
 

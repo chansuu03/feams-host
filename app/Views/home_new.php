@@ -200,17 +200,17 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
+<!-- SweetAlert JS -->
+<script src="<?= base_url();?>/public/js/sweetalert.min.js"></script>
+<script src="<?= base_url();?>/public/js/sweetalert2.all.min.js"></script>
 <?php if(!empty(session()->getFlashdata('sweetalertfail'))):?>
-	<!-- SweetAlert JS -->
-	<script src="<?= base_url();?>/public/js/sweetalert.min.js"></script>
-	<script src="<?= base_url();?>/public/js/sweetalert2.all.min.js"></script>
 	<script>
 		window.onload = function() {
 
 			Swal.fire({
 				icon: 'error',
 				title: 'Error',
-				text: '<?= session()->getFlashdata('sweetalertfail')?> There\'s an error accessing the page, please try again',
+				text: '<?= session()->getFlashdata('sweetalertfail')?>',
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: 'Okay'
 			})/*swal2*/.then((result) =>

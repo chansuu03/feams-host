@@ -51,7 +51,7 @@ class Discussions extends BaseController
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
         if($this->session->get('role') != $id) {
             if($id != 0) {
-                $this->session->setFlashdata('sweetalertfail', true);
+                $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
                 return redirect()->to(base_url());
             }
         }
@@ -97,7 +97,7 @@ class Discussions extends BaseController
         $data['perm_id'] = check_role('35', 'DISC', $this->session->get('role'));
         if($thread['creator'] != $this->session->get('user_id')) {
             if(!$data['perm_id']['perm_access']) {
-                $this->session->setFlashdata('sweetalertfail', true);
+                $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
                 return redirect()->to(base_url());
             }
         }

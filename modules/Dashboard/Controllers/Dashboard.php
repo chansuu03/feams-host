@@ -15,7 +15,7 @@ class Dashboard extends BaseController
         $data['perm_id'] = check_role('', '', $this->session->get('role'));
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
         if($this->session->get('role') != '1') {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['perms'] = array();

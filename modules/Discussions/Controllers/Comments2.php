@@ -24,11 +24,11 @@ class Comments2 extends BaseController
 
         $threadData = $this->threadModel->where('link', $thread)->first();
         if($threadData['visibility'] != 0 && $threadData['visibility'] != $this->session->get('role')) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         if(empty($threadData)) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
 
@@ -75,7 +75,7 @@ class Comments2 extends BaseController
         $data['perm_id'] = check_role('36', 'COMM', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
             if($data['comment']['user_id'] != $this->session->get('user_id')) {
-                $this->session->setFlashdata('sweetalertfail', true);
+                $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
                 return redirect()->to(base_url());
             } else {
                 $this->deleteModel($link, $id);

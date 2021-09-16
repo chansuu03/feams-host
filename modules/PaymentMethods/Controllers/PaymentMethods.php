@@ -16,7 +16,7 @@ class PaymentMethods extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('40', 'PAY', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
@@ -39,7 +39,7 @@ class PaymentMethods extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('40', 'PAY', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
@@ -78,7 +78,7 @@ class PaymentMethods extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('40', 'PAY', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
@@ -118,7 +118,7 @@ class PaymentMethods extends BaseController
         // checking roles and permissions
         $data['perm_id'] = check_role('40', 'PAY', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];

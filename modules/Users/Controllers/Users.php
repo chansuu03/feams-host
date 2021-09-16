@@ -23,7 +23,7 @@ class Users extends BaseController
     public function index() {
         $data['perm_id'] = check_role('1', 'USR', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
@@ -46,7 +46,7 @@ class Users extends BaseController
     public function delete($id) {
         $data['perm_id'] = check_role('6', 'ROLE', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
@@ -136,7 +136,7 @@ class Users extends BaseController
     public function changeStatus($username) {
         $data['perm_id'] = check_role('3', 'USR', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
@@ -155,14 +155,14 @@ class Users extends BaseController
     public function changeRole($username) {
         $data['perm_id'] = check_role('4', 'USR', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
         
         $user = $this->userModel->where('username', $username)->first();
         if(!$user) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
         if($_POST['status'] == '3' ||$_POST['status'] == '0') {
@@ -227,7 +227,7 @@ class Users extends BaseController
     public function importcsv() {
         $data['perm_id'] = check_role('3', 'USR', $this->session->get('role'));
         if(!$data['perm_id']['perm_access']) {
-            $this->session->setFlashdata('sweetalertfail', true);
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
 
