@@ -38,7 +38,7 @@
         </div>
         <div class="form-group"> <!-- Permissions -->
           <label for="perm_id">Permissions</label>
-          <select class="form-control select2bs4 <?=isset($errors['perm_id']) ? 'is-invalid': ''?>" multiple="multiple" id="perm_id" name="perm_id[]" data-placeholder="Select a Permission/s" required>
+          <select class="form-control select2 <?=isset($errors['perm_id']) ? 'is-invalid': ''?>" multiple="multiple" id="perm_id" name="perm_id[]" data-placeholder="Select a Permission/s" required>
             <option value="">Select...</option>
             <?php foreach($permissions as $permission):?>
               <?php $selected = false;?>
