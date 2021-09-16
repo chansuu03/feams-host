@@ -84,6 +84,25 @@
     </div>
 </div>
 
+<!-- Employee Info -->
+<br>
+<div class="d-flex">
+  <hr class="my-auto flex-grow-1">
+  <div class="px-4">EMPLOYMENT INFORMATION</div>
+  <hr class="my-auto flex-grow-1">
+</div>
+<br>
+
+<div class="form-group">
+  <label for="type">Employee Type <i class="far fa-question-circle"data-toggle="tooltip" data-placement="top" title="What is your status as an employee"></i></label>
+  <select id="type" class="form-control" name="type">
+    <option value="" selected>Choose...</option>
+    <option value="1" selected>Regular</option>
+    <option value="2" selected>Part-Time</option>
+    <option value="3" selected>Admin</option>
+  </select>
+</div>
+
 <!-- Account Info -->
 <br>
 <div class="d-flex">
