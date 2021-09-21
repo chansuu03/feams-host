@@ -47,6 +47,12 @@ class UserModel extends Model {
     return $this->get()->getResultArray();
   }
 
+  public function forVoting() {
+    $this->select('id, first_name, last_name');
+    $this->where(['users.deleted_at' => NULL, 'users.status' => '1']);
+    return $this->get()->getResultArray();
+  }
+
   public function viewProfile($username) {
     $this->select('users.id, username, role, profile_pic, last_name, first_name, middle_name, gender, birthdate, contact_number, email, status, roles.role_name');
     $this->where('username', $username);

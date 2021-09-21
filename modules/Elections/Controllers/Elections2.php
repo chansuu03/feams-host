@@ -20,6 +20,7 @@ class Elections2 extends BaseController
         $this->mpdf = new \Mpdf\Mpdf();
         $this->electoralPositionModel = new Models\ElectoralPositionModel();
         $this->activityLogModel = new AppModels\ActivityLogModel();
+        $this->userModel = new AppModels\UserModel();
         $this->vote2Model = new Voting2Models\VoteModel();
         $this->voteDetail2Model = new Voting2Models\VoteDetailModel();
 
@@ -228,6 +229,21 @@ class Elections2 extends BaseController
         $data['votes'] = $this->voteDetail2Model->voteCounts($id);
         $data['voteCount'] = $this->vote2Model->perUserVote($id);
         $data['voters'] = $this->vote2Model->elecVoter($id);
+        $data['users'] = $this->userModel->forVoting();
+
+        $data['noVotes'] = array();
+        $data['votersID'] = array();
+        foreach($data['voters'] as $voter) {
+            array_push($data['votersID'], $voter['voter_id']);
+        }
+        foreach($data['users'] as $user) {
+            if(!in_array($user['id'], $data['votersID'])) {
+                array_push($data['noVotes'], array('first_name' => $user['first_name'], 'last_name' => $user['last_name']));
+            }
+        }
+        // echo '<pre>';
+        // print_r($data['noVotes']);
+        // die();
         
         $data['user_details'] = user_details($this->session->get('user_id'));
         $data['active'] = 'elections';

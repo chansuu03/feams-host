@@ -21,9 +21,9 @@ class VoteModel extends Model {
     }
 
     public function elecVoter($elecID) {
-        $this->select('users.first_name, users.last_name');
+        $this->select('voter_id');
         $this->where('election_id', $elecID);
-        $this->join('users', 'users.id = votes2.voter_id');
+        // $this->join('users', 'users.id = votes2.voter_id');
         // echo '<pre>';
         // print_r($this->get()->getResultArray());
         // die();

@@ -2,8 +2,8 @@
 
 <?= $this->section('styles') ?>
   <!-- Select2 -->
-  <link rel="stylesheet" href="<?= base_url()?>/dist/select2/css/select2.min.css">
-  <link rel="stylesheet" href="<?= base_url()?>/dist/select2/css/select2-bootstrap4.min.css">
+  <link rel="stylesheet" href="<?= base_url()?>/public/dist/select2/css/select2.min.css">
+  <link rel="stylesheet" href="<?= base_url()?>/public/dist/select2/css/select2-bootstrap4.min.css">
 <?= $this->endSection() ?>
 
 <?= $this->section('content_header');?>

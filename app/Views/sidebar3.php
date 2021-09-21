@@ -44,10 +44,10 @@
   </li>
 <?php endif;?>
 
-<?php $contents = ['ANN', 'SLID']; $cont_access = false;?>
+<?php $contents = ['ANN', 'SLID', 'NEWS']; $cont_access = false;?>
 <?php if(count(array_intersect($perms, $contents)) > 1):?>
   <?php $cont_access = true;?>
-  <?php $cnt = ['announcements', 'sliders']?>
+  <?php $cnt = ['announcements', 'sliders', 'news']?>
   <!-- Content Management -->
   <li class="nav-item has-treeview <?= in_array($active, $cnt) ? 'menu-open' : ''?>">
     <a href="#" class="nav-link <?= in_array($active, $cnt) ? 'active' : ''?>">
@@ -79,6 +79,16 @@
             </a>
         </li>
       <?php endif;?>
+      <?php if(in_array('NEWS', $perms)):?>
+        <li class="nav-item">
+            <a href="<?= base_url('admin/news')?>" class="nav-link <?= $active=="news" ? 'active': ''?>">
+                <i class="nav-icon fas fa-newspaper"></i>
+                <p>
+                    News and Events
+                </p>
+            </a>
+        </li>
+      <?php endif;?>
     </ul>
   </li>
 <?php endif;?>
@@ -90,6 +100,15 @@
           <i class="nav-icon fas fa-bullhorn"></i>
           <p>
               Announcements
+          </p>
+      </a>
+  </li>
+  <!-- News -->
+  <li class="nav-item">
+      <a href="<?= base_url('admin/news')?>" class="nav-link <?= $active=="news" ? 'active': ''?>">
+          <i class="nav-icon fas fa-newspaper"></i>
+          <p>
+              News and Events
           </p>
       </a>
   </li>

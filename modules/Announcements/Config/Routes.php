@@ -9,4 +9,4 @@ $routes->group('admin/announcements', ['namespace' => 'Modules\Announcements\Con
 });
 
 $routes->get('announcements/(:alphanum)', '\Modules\Announcements\Controllers\Announcements::info/$1', ["filter" => "auth"]);
-$routes->get('announcements', '\Modules\Announcements\Controllers\Announcements::forMembers/$1', ["filter" => "auth"]);
+$routes->get('announcements', '\Modules\Announcements\Controllers\Announcements::forMembers/$1');

@@ -84,15 +84,29 @@
     </div>
     <!-- Voters -->
     <div class="row mt-2 ml-1">
-      <h4 class="card-text">Voters</h4>
+      <h4 class="card-text">Users who haven't voted</h4>
     </div>
-    <div class="row mt-2">
-      <div class="col">
-        <ol>
-          <?php foreach($voters as $voter):?>
-            <li><?= $voter['first_name']?> <?= $voter['last_name']?></li>
-          <?php endforeach?>
-        </ol>
+    <div class="card">
+      <div class="card-body">
+        <table class="table table-hover table-striped" id="noVotes">
+          <thead>
+              <tr>
+              <th scope="col">#</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              </tr>
+          </thead>
+          <tbody>
+            <?php $ctr=1; foreach($noVotes as $user):?>
+              <tr>
+                <td><?= esc($ctr)?></td>
+                <td><?= esc($user['first_name'])?></td>
+                <td><?= esc($user['last_name'])?></td>
+                <?php $ctr++;?>
+              </tr>
+            <?php endforeach;?>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -117,9 +131,10 @@
   
   // DataTables
   $(function () {
-    $('#election_details').DataTable({
+    $('#noVotes').DataTable({
         "responsive": true,
         "autoWidth": false,
+        "lengthMenu": [ 5,10, 25, 50, 75, 100 ],
       });
   });
 </script>

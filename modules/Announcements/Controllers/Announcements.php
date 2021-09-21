@@ -50,16 +50,18 @@ class Announcements extends BaseController
     }
 
     public function forMembers() {
-        // checking roles and permissions
-        $data['perm_id'] = check_role('', '', $this->session->get('role'));
-        // if(!$data['perm_id']['perm_access']) {
-        //     $this->session->setFlashdata('sweetalertfail', true);
-        //     return redirect()->to(base_url());
-        // }
-        $data['rolePermission'] = $data['perm_id']['rolePermission'];
-        $data['perms'] = array();
-        foreach($data['rolePermission'] as $rolePerms) {
-            array_push($data['perms'], $rolePerms['perm_mod']);
+        if($this->session->get('isLoggedIn')) {
+            // checking roles and permissions
+            $data['perm_id'] = check_role('', '', $this->session->get('role'));
+            // if(!$data['perm_id']['perm_access']) {
+            //     $this->session->setFlashdata('sweetalertfail', true);
+            //     return redirect()->to(base_url());
+            // }
+            $data['rolePermission'] = $data['perm_id']['rolePermission'];
+            $data['perms'] = array();
+            foreach($data['rolePermission'] as $rolePerms) {
+                array_push($data['perms'], $rolePerms['perm_mod']);
+            }
         }
 
         $data['announcements'] = $this->announceModel->viewUploader();
@@ -67,7 +69,11 @@ class Announcements extends BaseController
         $data['user_details'] = user_details($this->session->get('user_id'));
         $data['active'] = 'announcements';
         $data['title'] = 'Announcements';
-        return view('Modules\Announcements\Views\member', $data);
+        if($this->session->get('isLoggedIn')) {
+            return view('Modules\Announcements\Views\member', $data);
+        } else {
+            return view('Modules\Announcements\Views\noLoggedList', $data);
+        }
     }
 
     public function add() {
@@ -211,7 +217,8 @@ class Announcements extends BaseController
             $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
             return redirect()->to(base_url());
         }
-
+        $data['announces'] = $this->announceModel->findAll();
+        
         $data['user_details'] = user_details($this->session->get('user_id'));
         $data['active'] = 'announcements';
         $data['title'] = $data['announce']['title'];

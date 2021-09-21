@@ -6,6 +6,7 @@ use Modules\Announcements\Models as announceModels;
 use Modules\Sliders\Models as sliderModels;
 use Modules\Elections\Models as Election;
 use Modules\Discussions\Models as Discussion;
+use Modules\NewsEvents\Models as News;
 
 class Home extends BaseController
 {
@@ -15,6 +16,7 @@ class Home extends BaseController
         $this->sliderModel = new sliderModels\SliderModel();
         $this->electionModel = new Election\ElectionModel();
         $this->threadModel = new Discussion\ThreadModel();
+        $this->newsModel = new News\NewsModel();
 
         foreach($this->electionModel->findAll() as $election) {
             if($election['status'] == 'Application') {
@@ -53,12 +55,13 @@ class Home extends BaseController
 		$data['sliders'] = $this->sliderModel->findAll();
 		$data['allDiscussion'] = $this->threadModel->viewAllHomepage();
 		$data['roleDiscussion'] = $this->threadModel->viewRoleHomepage($this->session->get('role'));
+		$data['news'] = $this->newsModel->findAll();
         // echo '<pre>';
         // print_r($data['allDiscussion']);
         // die();
 
         $data['user_details'] = user_details($this->session->get('user_id'));
-		return view('home_new', $data);
+		return view('homev2', $data);
 	}
 
     // copy of index

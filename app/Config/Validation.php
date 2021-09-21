@@ -431,4 +431,31 @@ class Validation
         'rules' => 'uploaded[proof]|is_image[proof]',
     ],
   ];
+
+  public $news = [
+      'title' => [
+          'label' => 'Title', 
+          'rules' => 'max_length[999]',
+          'errors' => [
+              'required' => 'Title field is required',
+              'min_length' => 'Title field too short',
+              'max_length' => 'Title field reached max character length',
+          ]
+      ],
+      'content' => [
+          'label' => 'Content', 
+          'rules' => 'required',
+          'errors' => [
+              'required' => 'Content field is required',
+          ]
+      ],
+      'image' => [
+          'label' => 'Image', 
+          'rules' => 'uploaded[image]|is_image[image]',
+          'errors' => [
+              'uploaded' => 'No image uploaded',
+              'is_image' => 'Uploaded file is not an image',
+          ]
+      ],
+  ];
 }

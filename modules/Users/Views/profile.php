@@ -90,7 +90,14 @@
                     <li class="list-group-item">
                       <b>Status</b>
                       <a class="float-right">
-                        <?= esc($user['status'])?>
+                        <?php
+                          switch(esc($user['status'])) {
+                            case '1': echo 'Active'; break;
+                            case '2': echo 'Inactive'; break;
+                            case '3': echo 'Paid'; break;
+                            case '4': echo 'Unpaid'; break;
+                          }
+                        ?>
                       </a>
                     </li>
                 </ul>

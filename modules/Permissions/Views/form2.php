@@ -2,8 +2,8 @@
 
 <?= $this->section('styles') ?>
   <!-- Select2 -->
-  <link rel="stylesheet" href="<?= base_url()?>/public/dist/adminlte/plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="<?= base_url()?>/public/dist/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <link rel="stylesheet" href="<?= base_url()?>/public/dist/select2/css/select2.min.css">
+  <link rel="stylesheet" href="<?= base_url()?>/public/dist/select2/css/select2-bootstrap4.min.css">
 <?= $this->endSection() ?>
 
 <?= $this->section('page_header');?>
@@ -26,42 +26,41 @@
 <form action="<?= base_url('admin/permissions/edit')?>/<?= esc($role_id)?>" method="post" enctype="multipart/form-data" id="form">
 <input type="hidden" id="role_id" name="role_id" value="<?= esc($selectedRole['id'])?>">
 <div class="card card-light">
-    <div class="card-body">
-        <div class="form-group"> <!-- Role -->
-          <label for="role_id">Role</label>
-          <input class="form-control" id="disabledInput" type="text" value="<?= esc($selectedRole['role_name'])?>" placeholder="<?= esc($selectedRole['role_name'])?>"disabled>
-          <?php if(isset($errors['role_id'])):?>
-              <div class="invalid-feedback">
-                  <?=esc($errors['role_id'])?>
-              </div>
-          <?php endif;?>
-        </div>
-        <div class="form-group"> <!-- Permissions -->
-          <label for="perm_id">Permissions</label>
-          <select class="form-control select2 <?=isset($errors['perm_id']) ? 'is-invalid': ''?>" multiple="multiple" id="perm_id" name="perm_id[]" data-placeholder="Select a Permission/s" required>
-            <option value="">Select...</option>
-            <?php foreach($permissions as $permission):?>
-              <?php $selected = false;?>
-              <?php foreach($role_perms as $role_perm):?>
-                <?php if($permission['id'] == $role_perm['perm_id']):?>
-                    <option value="<?= esc($permission['id'])?>" selected><?= esc($permission['desc'])?></option>
-                    <?php $selected = true;?>
-                <?php endif;?>
-              <?php endforeach;?>
-              <?php if(!$selected):?>
-                <option value="<?= esc($permission['id'])?>"><?= esc($permission['desc'])?></option>
-              <?php endif;?>
-            <?php endforeach;?>
-          </select>
-          <?php if(isset($errors['perm_id'])):?>
-              <div class="invalid-feedback">
-                  <?=esc($errors['perm_id'])?>
-              </div>
-          <?php endif;?>
-        </div>
-        
-        <button type="button" class="float-end btn btn-primary btn-sm submit" >Submit</button>
+  <div class="card-body">
+    <div class="form-group"> <!-- Role -->
+      <label for="role_id">Role</label>
+      <input class="form-control" id="disabledInput" type="text" value="<?= esc($selectedRole['role_name'])?>" placeholder="<?= esc($selectedRole['role_name'])?>"disabled>
+      <?php if(isset($errors['role_id'])):?>
+          <div class="invalid-feedback">
+              <?=esc($errors['role_id'])?>
+          </div>
+      <?php endif;?>
     </div>
+    <div class="form-group"> <!-- Permissions -->
+      <label for="perm_id">Permissions</label>
+      <select class="form-control select2 <?=isset($errors['perm_id']) ? 'is-invalid': ''?>" multiple="multiple" id="perm_id" name="perm_id[]" data-placeholder="Select a Permission/s" required>
+        <option value="">Select...</option>
+        <?php foreach($permissions as $permission):?>
+          <?php $selected = false;?>
+          <?php foreach($role_perms as $role_perm):?>
+            <?php if($permission['id'] == $role_perm['perm_id']):?>
+                <option value="<?= esc($permission['id'])?>" selected><?= esc($permission['desc'])?></option>
+                <?php $selected = true;?>
+            <?php endif;?>
+          <?php endforeach;?>
+          <?php if(!$selected):?>
+            <option value="<?= esc($permission['id'])?>"><?= esc($permission['desc'])?></option>
+          <?php endif;?>
+        <?php endforeach;?>
+      </select>
+      <?php if(isset($errors['perm_id'])):?>
+          <div class="invalid-feedback">
+              <?=esc($errors['perm_id'])?>
+          </div>
+      <?php endif;?>
+    </div>
+    <button type="button" class="float-end btn btn-primary btn-sm submit" >Submit</button>
+  </div>
 </div>
 
 </form>
@@ -71,17 +70,14 @@
 <?= $this->section('scripts');?>
 
 <!-- Select2 -->
-<!-- <script src="<?= base_url();?>/dist/select2/js/select2.min.js"></script> -->
+<!-- <script src="<?= base_url();?>/public/dist/select2/js/select2.min.js"></script> -->
 <!-- Select2 -->
 <script src="<?= base_url();?>/public/dist/adminlte/plugins/select2/js/select2.full.min.js"></script>
 
 <script>
   $(function () {
     //Initialize Select2 Elements
-    $('.select2').select2()
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4',
+    $('select').select2({
     })
   })
 </script>
