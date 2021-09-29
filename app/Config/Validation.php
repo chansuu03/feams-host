@@ -458,4 +458,78 @@ class Validation
           ]
       ],
   ];
+
+  public $officers = [
+      'pres' => [
+          'label' => 'President', 
+          'rules' => 'required|numeric',
+      ],
+      'vpint' => [
+          'label' => 'VP Internal', 
+          'rules' => 'required|numeric',
+      ],
+      'vpext' => [
+          'label' => 'VP External', 
+          'rules' => 'required|numeric',
+      ],
+      'sect' => [
+          'label' => 'Secretary', 
+          'rules' => 'required|numeric',
+      ],
+      'assect' => [
+          'label' => 'Assistant Secretary', 
+          'rules' => 'required|numeric',
+      ],
+      'treas' => [
+          'label' => 'Treasurer', 
+          'rules' => 'required|numeric',
+      ],
+      'astreas' => [
+          'label' => 'Assistant Treasurer', 
+          'rules' => 'required|numeric',
+      ],
+      'audit' => [
+          'label' => 'Auditor', 
+          'rules' => 'required|numeric',
+      ],
+      'busMan1' => [
+          'label' => 'Business Manager', 
+          'rules' => 'required|numeric',
+      ],
+      'busMan2' => [
+          'label' => 'Business Manager', 
+          'rules' => 'required|numeric',
+      ],
+      'pro1' => [
+          'label' => 'Public Relations Officer', 
+          'rules' => 'required|numeric',
+      ],
+      'pro2' => [
+          'label' => 'Public Relations Officer', 
+          'rules' => 'required|numeric',
+      ],
+  ];
+
+  public $payFeedback = [
+    'subject' => [
+        'rules' => 'required|max_length[100]',
+        'errors' => [
+            'required' => 'Subject is required',
+            'max_length' => 'Length exceeds, please try again.',
+        ],
+    ],
+    'comment' => [
+        'rules' => 'required',
+        'errors' => [
+            'required' => 'Comment is required',
+        ],
+    ],
+    'subject' => [
+        'rules' => 'required|max_length[100]',
+        'errors' => [
+            'required' => 'Subject is required',
+            'max_length' => 'Length exceeds, please try again.',
+        ],
+    ],
+  ];
 }

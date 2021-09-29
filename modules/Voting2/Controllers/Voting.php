@@ -82,9 +82,10 @@ class Voting extends BaseController
             $voted = $this->voteModel->where(['election_id' => $id, 'voter_id' => $this->session->get('user_id')])->first();
             if(!empty($voted)) {
                 echo 'You have voted for this election';
-                $data['voteDetails'] = $this->voteDetailModel->where(['votes_id' => $voted['id']])->findAll();
+                // $data['voteDetails'] = $this->voteDetailModel->where(['votes_id' => $voted['id']])->findAll();
+                $data['voteDetails'] = $this->voteDetailModel->viewDetail($voted['id']);
                 // echo '<pre>';
-                // print_r($data['votes']);
+                // print_r($data['voteDetails']);
                 return view('Modules\Voting2\Views\results2', $data);
             } else {
                 echo 'You didn\'t vote for the election.';

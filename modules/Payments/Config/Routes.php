@@ -9,4 +9,7 @@ $routes->group('payments', ['namespace' => 'Modules\Payments\Controllers'], func
   $routes->get('contri/(:num)', 'Payments::contriTable/$1');
   $routes->get('approve/(:num)', 'Payments::approve/$1');
   $routes->get('decline/(:num)', 'Payments::decline/$1');
+  $routes->post('feedback', 'Payments::feedback');
 });
+
+$routes->get('admin/payment-feedbacks', '\Modules\Payments\Controllers\Payments::adminFeedback', ["filter" => "auth"]);

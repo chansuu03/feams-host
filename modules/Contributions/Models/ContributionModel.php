@@ -22,4 +22,17 @@ class ContributionModel extends Model {
         $this->join('users', 'contributions.created_by = users.id');
         return $this->get()->getResultArray();
     }
+
+    public function viewMem() {
+        $this->select('id, name, cost');
+        $this->where(['deleted_at' => NULL]);
+        return $this->get()->getResultArray();
+    }
+
+    public function viewPayments($id) {
+        $this->select('contributions.id, name, cost, payments.amount, payments.is_approved, payments.photo, payments.contri_id');
+        $this->where('payments.user_id', $id);
+        $this->join('payments', 'contributions.id = payments.contri_id');
+        return $this->get()->getResultArray();
+    }
 }

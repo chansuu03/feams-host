@@ -13,6 +13,7 @@ class Payments extends BaseController
         $this->userModel = new AppModels\UserModel();
         $this->contriModel = new ContribModels\ContributionModel();
         $this->activityLogModel = new AppModels\ActivityLogModel();
+        $this->paymentFeedbacksModel = new Models\PaymentFeedbacksModel();
     }
 
     public function index() {
@@ -29,12 +30,14 @@ class Payments extends BaseController
             // echo '<pre>';
             // print_r($data['payments']);
             // die();
+            $data['contri']  = $this->contriModel->viewMem();
         }
         $data['rolePermission'] = $data['perm_id']['rolePermission'];
         $data['perms'] = array();
         foreach($data['rolePermission'] as $rolePerms) {
             array_push($data['perms'], $rolePerms['perm_mod']);
         }
+        $data['edit'] = false;
 
         $data['user_details'] = user_details($this->session->get('user_id'));
         $data['active'] = 'payments';
@@ -42,7 +45,7 @@ class Payments extends BaseController
         if($isAdmin) {
             return view('Modules\Payments\Views\admin', $data);
         } else {
-            return view('Modules\Payments\Views\index', $data);
+            return view('Modules\Payments\Views\index2', $data);
         }
     }
 
@@ -118,6 +121,10 @@ class Payments extends BaseController
         $data['edit'] = false;
         $data['payments'] = $this->contriModel->findAll();
         if($this->request->getMethod() == 'post') {
+            // echo '<pre>';
+            // print_r($_POST);
+            // print_r($_FILES);
+            // die();
             if($this->validate('payments_member')) {
                 // check if the user has paid all the contribution
                 $contri = $this->contriModel->where('id', $_POST['contri_id'])->first();
@@ -265,5 +272,51 @@ class Payments extends BaseController
           $this->session->setFlashData('errorMsg', 'Something went wrong!');
         }
         return redirect()->to(base_url('payments'));
+    }
+
+    public function feedback() {
+        if($this->validate('payFeedback')){
+            $file = $this->request->getFile('attachment');
+            if($file->isValid() &&  !$file->hasMoved()) {
+                $_POST['attachment'] = $file->getRandomName();
+                $file->move('public/uploads/feedbacks', $_POST['attachment']);
+            }
+            if($this->paymentFeedbacksModel->insert($_POST)) {
+                $activityLog['user'] = $this->session->get('user_id');
+                $activityLog['description'] = 'Sent a feedback';
+                $this->activityLogModel->save($activityLog);
+                $this->session->setFlashData('successMsg', 'Successfully sent feedback');
+                return redirect()->back();
+            }
+        } else {
+            $data['feedValue'] = $_POST;
+            $data['feedErrors'] = $this->validation->getErrors();
+            $this->session->setFlashdata($data);
+            return redirect()->back();
+        }
+    }
+
+    public function adminFeedback() {
+        // checking roles and permissions
+        $data['perm_id'] = check_role('40', 'PAY', $this->session->get('role'));
+        if(!$data['perm_id']['perm_access']) {
+            $this->session->setFlashdata('sweetalertfail', 'Error accessing the page, please try again');
+            return redirect()->to(base_url());
+        }
+        $data['rolePermission'] = $data['perm_id']['rolePermission'];
+        $data['perms'] = array();
+        foreach($data['rolePermission'] as $rolePerms) {
+            array_push($data['perms'], $rolePerms['perm_mod']);
+        }
+
+        $data['feedbacks'] = $this->paymentFeedbacksModel->joinNames();
+        // echo '<pre>';
+        // print_r($data['feedbacks']);
+        // die();
+
+        $data['user_details'] = user_details($this->session->get('user_id'));
+        $data['active'] = 'payment_feedback';
+        $data['title'] = 'Payment Feedbacks';
+        return view('Modules\Payments\Views\adminFeedback\index', $data);
     }
 }

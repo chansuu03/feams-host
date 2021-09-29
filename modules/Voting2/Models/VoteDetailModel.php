@@ -20,7 +20,7 @@ class VoteDetailModel extends Model {
 
     public function voteCounts($elecID) {
         $db = \Config\Database::connect();
-        $results = $db->query('SELECT COUNT(user_id) as voteCount, users.first_name, users.last_name, type, votes2.election_id 
+        $results = $db->query('SELECT COUNT(user_id) as voteCount, users.first_name, users.last_name, type, votes2.election_id, vote_details2.user_id
         FROM vote_details2 
         JOIN users ON users.id = `vote_details2`.user_id 
         JOIN votes2 ON votes2.id = vote_details2.votes_id 
@@ -30,5 +30,12 @@ class VoteDetailModel extends Model {
         // print_r($results->getResultArray());
         // die();
         return $results->getResultArray();
+    }
+
+    public function viewDetail($votesID) {
+        $this->select('vote_details2.id, votes_id, user_type, users.first_name, users.last_name');
+        $this->where(['votes_id' => $votesID]);
+        $this->join('users', 'users.id = vote_details2.user_id');
+        return $this->get()->getResultArray();
     }
 }

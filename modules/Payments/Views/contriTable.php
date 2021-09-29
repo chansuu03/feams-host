@@ -57,3 +57,69 @@
       });
   });
 </script>
+
+
+<!-- SweetAlert2 -->
+<script type="text/javascript">
+  $(document).ready(function ()
+  {
+    $('.dec').click(function (e)
+    {
+      e.preventDefault();
+      var id = $(this).val();
+
+      Swal.fire({
+        icon: 'question',
+        title: 'Decline?',
+        text: 'Are you sure to decline payment?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, decline it!'
+      })/*swal2*/.then((result) =>
+      {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed)
+        {
+          window.location = 'payments/decline/' + id;
+        }
+        else if (result.isDenied)
+        {
+          Swal.fire('Changes are not saved', '', 'info')
+        }
+      })//then
+    });
+  });
+</script>
+<!-- SweetAlert2 -->
+<script type="text/javascript">
+  $(document).ready(function ()
+  {
+    $('.acc').click(function (e)
+    {
+      e.preventDefault();
+      var id = $(this).val();
+
+      Swal.fire({
+        icon: 'question',
+        title: 'Approve?',
+        text: 'Are you sure to approve payment?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, approve it!'
+      })/*swal2*/.then((result) =>
+      {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed)
+        {
+          window.location = 'payments/approve/' + id;
+        }
+        else if (result.isDenied)
+        {
+          Swal.fire('Changes are not saved', '', 'info')
+        }
+      })//then
+    });
+  });
+</script>

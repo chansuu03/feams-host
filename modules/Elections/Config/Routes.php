@@ -8,6 +8,7 @@ $routes->group('admin/elections', ['namespace' => 'Modules\Elections\Controllers
   $routes->get('(:num)', 'Elections2::info2/$1', ["filter" => "auth"]);
 //   $routes->get('(:num)/pdf', 'Elections2::generatePDF/$1', ["filter" => "auth"]);
   $routes->get('(:num)/pdf', 'Elections2::pdf/$1', ["filter" => "auth"]);
+  $routes->post('(:num)/set', 'Elections2::saveOfficers/$1', ["filter" => "auth"]);
 });
 
 $routes->group('admin/candidates', ['namespace' => 'Modules\Elections\Controllers'], function($routes){

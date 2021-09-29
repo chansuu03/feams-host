@@ -23,6 +23,7 @@ class Elections2 extends BaseController
         $this->userModel = new AppModels\UserModel();
         $this->vote2Model = new Voting2Models\VoteModel();
         $this->voteDetail2Model = new Voting2Models\VoteDetailModel();
+        $this->officerModel = new Models\OfficerModel();
 
         $elections = $this->electionModel->findAll();
         foreach($this->electionModel->findAll() as $election) {
@@ -241,9 +242,14 @@ class Elections2 extends BaseController
                 array_push($data['noVotes'], array('first_name' => $user['first_name'], 'last_name' => $user['last_name']));
             }
         }
-        // echo '<pre>';
-        // print_r($data['noVotes']);
-        // die();
+        $data['hasOfficers'] = false;
+        if(!empty($this->officerModel->viewing($id))) {
+            $data['hasOfficers'] = true;
+            $data['officers'] = $this->officerModel->viewing($id);
+            // echo '<pre>';
+            // print_r($data['officers']);
+            // die();
+         }
         
         $data['user_details'] = user_details($this->session->get('user_id'));
         $data['active'] = 'elections';
@@ -386,5 +392,34 @@ class Elections2 extends BaseController
         $data['title'] = 'Edit Elections';
         // return view('Modules\Elections\Views\form', $data);
         return view('Modules\Elections\Views\formTime2', $data);
+    }
+
+    public function saveOfficers($id) {
+        if($this->request->getMethod() == 'post') {
+            if($this->validate('officers')){
+                $keys = array_keys($_POST);
+                $data = array_map(null, $_POST,$keys);
+                foreach($data as $data) {
+                    $officers[] = [
+                        'election_id' => $id,
+                        'user_id' => $data[0], 
+                        'position' => $data[1],
+                        'status' => '1',
+                    ];
+                }
+                if($this->officerModel->insertBatch($officers)) {
+                    $this->session->setFlashdata('successMsg', 'Successfully elected new officers!');
+                    return redirect()->to(base_url('admin/elections/'.$id));
+                } else {
+                    $this->session->setFlashdata('failMsg', 'Failed to elect new officer, please try again');
+                    return redirect()->to(base_url('admin/elections/'.$id));
+                }
+            } else {
+                $data['value'] = $_POST;
+                $data['errors'] = $this->validation->getErrors();
+                $this->session->setFlashdata($data);
+                return redirect()->to(base_url('admin/elections/'.$id));
+            }
+        }
     }
 }

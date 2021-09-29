@@ -57,11 +57,11 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?= base_url();?>" class="brand-link">
-      <img src="<?= base_url()?>/public/img/sidebar.png"
+      <img src="<?= base_url()?>/public/img/puplogo.png"
            alt="PUP Logo"
            class="justify-content-center brand-image elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-bold">FEAMS</span>
+      <span class="brand-text font-weight-bold">PUPTFEA</span>
     </a>
 
     <!-- Sidebar -->

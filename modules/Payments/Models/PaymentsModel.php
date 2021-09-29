@@ -37,4 +37,12 @@ class PaymentsModel extends Model {
         $this->join('users', 'payments.user_id = users.id');
         return $this->get()->getResultArray();
     }
+
+    public function allPaid() {
+        $this->select('amount, users.first_name, users.last_name, contributions.name, payments.created_at, payments.user_id, contri_id');
+        $this->where(['payments.deleted_at' => NULL]);
+        $this->join('users', 'users.id = payments.user_id');
+        $this->join('contributions', 'contributions.id = payments.contri_id');
+        return $this->get()->getResultArray();
+    }
 }

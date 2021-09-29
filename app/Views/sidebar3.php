@@ -170,7 +170,7 @@
         </li> -->
       <?php endif;?>
       <li class="nav-item">
-          <a href="<?= base_url('voting')?>" class="nav-link <?= $active=="voting" ? 'active': ''?>">
+          <a href="<?= base_url('votes')?>" class="nav-link <?= $active=="voting" ? 'active': ''?>">
               <i class="nav-icon fas fa-vote-yea"></i>
               <p>
                   Voting
@@ -183,7 +183,7 @@
 
 <?php if(!$elec_access):?>
   <li class="nav-item">
-      <a href="<?= base_url('voting')?>" class="nav-link <?= $active=="voting" ? 'active': ''?>">
+      <a href="<?= base_url('votes')?>" class="nav-link <?= $active=="voting" ? 'active': ''?>">
           <i class="nav-icon fas fa-vote-yea"></i>
           <p>
               Voting
@@ -195,7 +195,7 @@
 <?php $pay_mgmt = ['CONT', 'PAY']; $payMgmt_access = false;?>
 <?php if(count(array_intersect($perms, $pay_mgmt)) >= 1):?>
   <?php $payMgmt_access = true;?>
-  <?php $pays = ['contributions', 'payments', 'payment_method']?>
+  <?php $pays = ['contributions', 'payments', 'payment_method', 'payment_feedback']?>
   <!-- Payment Management -->
   <li class="nav-item has-treeview <?= in_array($active, $pays) ? 'menu-open' : ''?>">
     <a href="#" class="nav-link <?= in_array($active, $pays) ? 'active' : ''?>">
@@ -224,6 +224,17 @@
                 <i class="nav-icon fas fa-hand-holding-usd"></i>
                 <p>
                   Payment Methods
+                </p>
+            </a>
+        </li>
+      <?php endif;?>
+      <?php if(in_array('PAY', $perms)):?>
+        <!-- Feedbacks -->
+        <li class="nav-item">
+            <a href="<?= base_url('admin/payment-feedbacks')?>" class="nav-link <?= $active=="payment_feedback" ? 'active': ''?>">
+                <i class="nav-icon fas fa-comment"></i>
+                <p>
+                  Feedbacks
                 </p>
             </a>
         </li>
@@ -282,7 +293,7 @@
 
 <?php $reports = ['REPO'];?>
 <?php if(count(array_intersect($perms, $reports)) >= 1):?>
-  <?php $repo = ['login_repo']?>
+  <?php $repo = ['login_repo', 'pay_repo']?>
   <!-- Reports -->
   <!-- Content Management -->
   <li class="nav-item has-treeview <?= in_array($active, $repo) ? 'menu-open' : ''?>">
@@ -296,10 +307,19 @@
     <ul class="nav nav-treeview" style="margin-left: 15px;">
       <!-- Login -->
       <li class="nav-item">
-          <a href="<?= base_url('admin/reports/login')?>" class="nav-link <?= $active=="reports" ? 'active': ''?>">
+          <a href="<?= base_url('admin/reports/login')?>" class="nav-link <?= $active=="login_repo" ? 'active': ''?>">
               <i class="nav-icon fas fa-sign-in-alt"></i>
               <p>
                   Login Reports
+              </p>
+          </a>
+      </li>
+      <!-- Payments -->
+      <li class="nav-item">
+          <a href="<?= base_url('admin/reports/payments')?>" class="nav-link <?= $active=="pay_repo" ? 'active': ''?>">
+              <i class="nav-icon fas fa-file-invoice-dollar"></i>
+              <p>
+                  Payment Reports
               </p>
           </a>
       </li>
